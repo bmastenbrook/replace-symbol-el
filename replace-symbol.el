@@ -33,7 +33,7 @@ Returns when a scan-error is caught."
         (forward-sexp))
     (scan-error nil)))
 
-(defun beginning-of-list-p ()
+(defun replace-symbol--beginning-of-list-p ()
   "Return true when the point is at the beginning of a list."
   (save-excursion
     (condition-case c
@@ -64,7 +64,7 @@ If RECURSIVE is true, do not announced the number of replacements."
              ;; the combination of those two puts us on the first character
              ;; of the sexp
              (cond
-              ((beginning-of-list-p)
+              ((replace-symbol--beginning-of-list-p)
                ;; we're sitting on the beginning of a list
                (down-list)   ; travel into the sexp and replace inside
                (replace-symbol-in-sexps-until-error from to))
