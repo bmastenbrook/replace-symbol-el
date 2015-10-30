@@ -54,7 +54,7 @@ Returns when a scan-error is caught."
 ;;;###autoload
 (defun replace-symbol-in-sexp (from to &optional recursive)
   "Replace the symbol FROM with TO in the sexp following the point.
-If RECURSIVE is true, do not announced the number of replacements."
+If RECURSIVE is true, do not announce the number of replacements."
   (interactive "sReplace symbol: \nsReplace symbol %s with: ")
   (let ((do-replace
          (lambda ()
