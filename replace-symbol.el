@@ -51,7 +51,7 @@ Returns when a scan-error is caught."
 ;; Dynamic variable used for recursive calls to replace-symbol-in-sexp
 (defvar replace-symbol--replaced-in-sexp 0)
 
-(defun replace-symbol-read-args ()
+(defun replace--symbol-read-args ()
   (let* ((sap (symbol-at-point))
          (def (when (and sap (symbolp sap))
                 (symbol-name sap)))
