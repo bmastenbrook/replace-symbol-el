@@ -49,13 +49,27 @@ Returns when a scan-error is caught."
       (scan-error nil))))
 
 ;; Dynamic variable used for recursive calls to replace-symbol-in-sexp
-(defvar replace-symbol--replaced-in-sexp nil)
+(defvar replace-symbol--replaced-in-sexp 0)
+
+(defun replace-symbol-read-args ()
+  (let* ((sap (symbol-at-point))
+         (def (when (and sap (symbolp sap))
+                (symbol-name sap)))
+         (from (read-string (if def
+                                (format "Replace symbol (default %s): " def)
+                              "Replace symbol: ")
+                            nil query-replace-from-history-variable def))
+         (to (read-string (format "Replace symbol %s with: " from)
+                          nil query-replace-to-history-variable nil)))
+    (list from to)))
 
 ;;;###autoload
 (defun replace-symbol-in-sexp (from to &optional recursive)
   "Replace the symbol FROM with TO in the sexp following the point.
 If RECURSIVE is true, do not announce the number of replacements."
-  (interactive "sReplace symbol: \nsReplace symbol %s with: ")
+  ;; (interactive "sReplace symbol: \nsReplace symbol %s with: ")
+  (interactive (append (replace-symbol-read-args)
+                       (list current-prefix-arg)))
   (let ((do-replace
          (lambda ()
            (save-excursion
@@ -94,7 +108,7 @@ If RECURSIVE is true, do not announce the number of replacements."
 ;;;###autoload
 (defun replace-symbol-in-buffer (from to)
   "Replace the symbol FROM with TO in the entire buffer."
-  (interactive "sReplace symbol: \nsReplace symbol %s with: ")
+  (interactive (replace-symbol-read-args))
   (let ((replace-symbol--replaced-in-sexp 0))
     (save-excursion
       (goto-char (point-min))
