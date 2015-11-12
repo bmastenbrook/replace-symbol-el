@@ -52,6 +52,7 @@ Returns when a scan-error is caught."
 (defvar replace-symbol--replaced-in-sexp 0)
 
 (defun replace-symbol--read-args ()
+  "Query from/to replace strings, defaulting to symbol at point."
   (let* ((sap (symbol-at-point))
          (def (when (and sap (symbolp sap))
                 (symbol-name sap)))
@@ -67,9 +68,7 @@ Returns when a scan-error is caught."
 (defun replace-symbol-in-sexp (from to &optional recursive)
   "Replace the symbol FROM with TO in the sexp following the point.
 If RECURSIVE is true, do not announce the number of replacements."
-  ;; (interactive "sReplace symbol: \nsReplace symbol %s with: ")
-  (interactive (append (replace-symbol--read-args)
-                       (list current-prefix-arg)))
+  (interactive (replace-symbol--read-args))
   (let ((do-replace
          (lambda ()
            (save-excursion
