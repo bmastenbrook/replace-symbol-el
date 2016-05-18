@@ -1,7 +1,7 @@
 ;;; replace-symbol.el --- Rename symbols in expressions or buffers
 
 ;; Author: Brian Mastenbrook <brian@mastenbrook.net>
-;; Version: 1.0
+;; Version: 1.1
 ;; URL: https://github.com/bmastenbrook/replace-symbol-el
 
 ;;; Commentary:
@@ -49,7 +49,7 @@ Returns when a scan-error is caught."
       (scan-error nil))))
 
 ;; Dynamic variable used for recursive calls to replace-symbol-in-sexp
-(defvar replace-symbol--replaced-in-sexp 0)
+(defvar replace-symbol--replaced-in-sexp nil)
 
 (defun replace-symbol--read-args ()
   "Query from/to replace strings, defaulting to symbol at point."
